@@ -128,17 +128,17 @@ header {
     justify-content: center;
 }
 
-.profile-placeholder {
-    color: white;
-    font-size: 2.5rem;
-    font-weight: bold;
-}
-
 .profile-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center top;
+}
+
+.profile-placeholder {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
 }
 
 .profile-content h1 {
@@ -236,6 +236,22 @@ section h2::after {
 .degree {
     font-weight: 500;
     margin-bottom: 0.5rem;
+}
+
+.profile-links {
+    margin: 1rem 0;
+    color: var(--text-light);
+}
+
+.profile-links a {
+    margin: 0 0.25rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.profile-links a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
 
 /* Skills Section */
