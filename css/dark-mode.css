@@ -16,25 +16,28 @@
     --transition: all 0.3s ease;
 }
 
-/* Dark mode color scheme */
+/* Dark mode color scheme - Matrix-inspired theme */
 body.dark-mode {
-    --primary-color: #819ecb;
-    --primary-dark: #5d7ab6;
-    --secondary-color: #a0b6e1;
-    --text-color: #e1e1e1;
-    --text-light: #b0b0b0;
-    --background-color: #1a1a2e;
-    --card-color: #222438;
-    --border-color: #2a2a40;
-    --accent-color: #9590ff;
-    --success-color: #48bb78;
-    --warning-color: #f6ad55;
-    --danger-color: #f56565;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --primary-color: #00FF41; /* Classic Matrix green */
+    --primary-dark: #00CC33;
+    --secondary-color: #00FF41;
+    --text-color: #e2e2e2;
+    --text-light: #a0a0a0;
+    --background-color: #0a0a0a;  /* Very dark, almost black */
+    --card-color: #111111;
+    --border-color: #222222;
+    --accent-color: #39FF14; /* Bright Matrix green for highlights */
+    --success-color: #00FF41;
+    --warning-color: #d29922;
+    --danger-color: #f85149;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    /* Removed transition from here to set it consistently below */
 }
 
-/* Apply transitions to relevant elements */
-body,
+/* Consistent and fast transition for all elements */
+body.dark-mode,
+body.dark-mode *,
+body *,
 .card,
 header,
 h1, h2, h3, h4, h5, h6,
@@ -45,10 +48,7 @@ footer,
 .btn,
 .btn-outline,
 nav a {
-    transition: background-color 0.3s ease, 
-               color 0.3s ease, 
-               border-color 0.3s ease, 
-               box-shadow 0.3s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
 }
 
 /* Theme toggle button styles */
@@ -85,6 +85,31 @@ body:not(.dark-mode) .dark-icon {
 
 body.dark-mode .light-icon {
     display: none;
+}
+
+/* Dark mode specific adjustments for skills and tags */
+body.dark-mode .skill-list li {
+    background-color: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+}
+
+body.dark-mode .tag {
+    background-color: rgba(0, 255, 65, 0.1);
+    color: var(--primary-color);
+}
+
+body.dark-mode footer {
+    background-color: #050505;
+}
+
+/* Matrix-inspired text shadow for links in dark mode */
+body.dark-mode a:hover {
+    text-shadow: 0 0 8px rgba(0, 255, 65, 0.7);
+}
+
+/* Matrix-inspired glow for section headers */
+body.dark-mode section h2::after {
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.7);
 }
 
 /* Copy all the rest of the styles from style.css below this line */
@@ -417,6 +442,11 @@ section h2::after {
     border-radius: 4px;
 }
 
+body.dark-mode .placeholder-img {
+    background-color: #171717;
+    color: #6e7681;
+}
+
 .project-description {
     flex: 1;
 }
@@ -567,6 +597,17 @@ footer {
     animation: fadeIn 0.5s ease-out forwards;
 }
 
+/* Matrix-style color glow for dark mode */
+@keyframes matrixPulse {
+    0% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
+    50% { box-shadow: 0 0 10px rgba(0, 255, 65, 0.7); }
+    100% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
+}
+
+body.dark-mode .card {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
 /* Image placeholders */
 .placeholder-img {
     position: relative;
@@ -575,8 +616,18 @@ footer {
     animation: shine 1.5s infinite;
 }
 
+body.dark-mode .placeholder-img {
+    background: linear-gradient(120deg, #151515 30%, #202020 38%, #202020 40%, #151515 48%);
+    background-size: 200% 100%;
+}
+
 @keyframes shine {
     to {
         background-position: 200% center;
     }
+}
+
+/* Dark mode hover effects for cards */
+body.dark-mode .card:hover {
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
