@@ -16,24 +16,24 @@
     --transition: all 0.3s ease;
 }
 
-/* Dark mode color scheme - professional academic theme */
+/* Dark mode color scheme - Professional Academic dark theme */
 body.dark-mode {
-    --primary-color: #58a6ff;    /* Professional blue */
-    --primary-dark: #388bfd;
-    --secondary-color: #58a6ff;
-    --text-color: #e6e6e6;
+    --primary-color: #6a98d0;       /* Professional blue */
+    --primary-dark: #5177b8;
+    --secondary-color: #6a98d0;
+    --text-color: #e2e2e2;
     --text-light: #a0a0a0;
-    --background-color: #0d1117;
-    --card-color: #161b22;
-    --border-color: #30363d;
-    --accent-color: #79c0ff;
-    --success-color: #56d364;
-    --warning-color: #e3b341;
-    --danger-color: #f85149;
+    --background-color: #121620;    /* Deep navy-black */
+    --card-color: #1e2433;          /* Slightly lighter navy */
+    --border-color: #2d3548;
+    --accent-color: #81a1d6;        /* Lighter blue for accents */
+    --success-color: #56c288;
+    --warning-color: #e6c86e;
+    --danger-color: #e77681;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Faster consistent transition for all elements - 0.15s */
+/* Consistent and fast transition for all elements */
 body.dark-mode,
 body.dark-mode *,
 body *,
@@ -47,7 +47,7 @@ footer,
 .btn,
 .btn-outline,
 nav a {
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, text-shadow 0.15s ease !important;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
 }
 
 /* Theme toggle button styles */
@@ -63,7 +63,7 @@ nav a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.2s ease;
 }
 
 .theme-toggle:hover {
@@ -88,30 +88,27 @@ body.dark-mode .light-icon {
 
 /* Dark mode specific adjustments for skills and tags */
 body.dark-mode .skill-list li {
-    background-color: rgba(88, 166, 255, 0.1);
+    background-color: rgba(106, 152, 208, 0.15);
     color: var(--primary-color);
 }
 
 body.dark-mode .tag {
-    background-color: rgba(88, 166, 255, 0.1);
+    background-color: rgba(106, 152, 208, 0.15);
     color: var(--primary-color);
 }
 
 body.dark-mode footer {
-    background-color: #090c10;
+    background-color: #0e121a;
 }
 
-/* Blue glow effects for dark mode */
+/* Subtle glow for links in dark mode */
 body.dark-mode a:hover {
-    text-shadow: 0 0 8px rgba(88, 166, 255, 0.7);
+    text-shadow: 0 0 8px rgba(106, 152, 208, 0.3);
 }
 
-body.dark-mode .card:hover {
-    box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
-}
-
-body.dark-mode section h2::after {
-    box-shadow: 0 0 6px rgba(88, 166, 255, 0.5);
+/* Fix for skill category headings to match other h3 elements */
+body.dark-mode .skill-category h3 {
+    color: var(--primary-color);  /* Match the color of other h3 elements */
 }
 
 /* Copy all the rest of the styles from style.css below this line */
@@ -138,6 +135,7 @@ body {
 a {
     color: var(--primary-color);
     text-decoration: none;
+    transition: var(--transition);
 }
 
 a:hover {
@@ -165,6 +163,7 @@ img {
     background-color: var(--primary-color);
     color: white;
     border-radius: 4px;
+    transition: var(--transition);
     font-weight: 500;
     border: none;
     cursor: pointer;
@@ -173,10 +172,6 @@ img {
 .btn:hover {
     background-color: var(--primary-dark);
     color: white;
-}
-
-body.dark-mode .btn:hover {
-    box-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
 }
 
 .btn-outline {
@@ -354,6 +349,7 @@ section h2::after {
 .profile-links a {
     margin: 0 0.25rem;
     color: var(--primary-color);
+    transition: var(--transition);
 }
 
 .profile-links a:hover {
@@ -373,9 +369,8 @@ section h2::after {
     min-width: 200px;
 }
 
-/* FIXED: Skill category headings color to match subsection headings */
 .skill-category h3 {
-    color: var(--text-color);  /* Changed from var(--secondary-color) */
+    color: var(--secondary-color);
     margin-bottom: 1rem;
     font-size: 1.1rem;
 }
@@ -447,8 +442,8 @@ section h2::after {
 }
 
 body.dark-mode .placeholder-img {
-    background-color: #1d232a;
-    color: #6e7681;
+    background-color: #2a3042;
+    color: #8b92a5;
 }
 
 .project-description {
@@ -591,14 +586,14 @@ footer {
     }
 }
 
-/* Animations - modified for dark mode */
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .card {
-    animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.3s ease-out forwards;
 }
 
 /* Image placeholders */
@@ -610,7 +605,7 @@ footer {
 }
 
 body.dark-mode .placeholder-img {
-    background: linear-gradient(120deg, #1d232a 30%, #2d333b 38%, #2d333b 40%, #1d232a 48%);
+    background: linear-gradient(120deg, #2a3042 30%, #323a4e 38%, #323a4e 40%, #2a3042 48%);
     background-size: 200% 100%;
 }
 
