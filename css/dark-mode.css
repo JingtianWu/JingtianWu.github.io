@@ -47,7 +47,7 @@ footer,
 .btn,
 .btn-outline,
 nav a {
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, text-shadow 0.15s ease !important;
 }
 
 /* Theme toggle button styles */
@@ -99,6 +99,19 @@ body.dark-mode .tag {
 
 body.dark-mode footer {
     background-color: #090c10;
+}
+
+/* Blue glow effects for dark mode */
+body.dark-mode a:hover {
+    text-shadow: 0 0 8px rgba(88, 166, 255, 0.7);
+}
+
+body.dark-mode .card:hover {
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+}
+
+body.dark-mode section h2::after {
+    box-shadow: 0 0 6px rgba(88, 166, 255, 0.5);
 }
 
 /* Copy all the rest of the styles from style.css below this line */
@@ -160,6 +173,10 @@ img {
 .btn:hover {
     background-color: var(--primary-dark);
     color: white;
+}
+
+body.dark-mode .btn:hover {
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
 }
 
 .btn-outline {
