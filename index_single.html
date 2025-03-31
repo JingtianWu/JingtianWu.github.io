@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jingtian Wu | Cornell University</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Additional styling for smooth scrolling */
@@ -49,11 +49,6 @@
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#publications">Publications</a></li>
                 </ul>
-                <!-- Dark Mode Toggle Button -->
-                <button class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-moon dark-icon theme-icon"></i>
-                    <i class="fas fa-sun light-icon theme-icon"></i>
-                </button>
             </nav>
         </div>
     </header>
@@ -313,7 +308,35 @@
         </div>
     </footer>
 
-    <!-- Changed from script.js to dark-mode.js -->
-    <script src="js/dark-mode.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // JavaScript to handle active navigation links based on scroll position
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            
+            function updateActiveLink() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 200)) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Call once on page load
+        });
+    </script>
 </body>
 </html>
