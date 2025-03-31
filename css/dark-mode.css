@@ -33,22 +33,21 @@ body.dark-mode {
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Remove all fade-in transitions for text */
-body, body * {
-    transition: none !important;
-}
-
-/* Only transition background colors with very short duration */
+/* Faster consistent transition for all elements - 0.15s */
+body.dark-mode,
+body.dark-mode *,
+body *,
 .card,
 header,
-.btn,
-.btn-outline,
-.theme-toggle,
+h1, h2, h3, h4, h5, h6,
+a,
 .skill-list li,
 .tag,
-nav a,
-footer {
-    transition: background-color 0.1s ease !important;
+footer,
+.btn,
+.btn-outline,
+nav a {
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
 }
 
 /* Theme toggle button styles */
@@ -64,6 +63,7 @@ footer {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    transition: background-color 0.15s ease;
 }
 
 .theme-toggle:hover {
@@ -356,7 +356,7 @@ section h2::after {
     min-width: 200px;
 }
 
-/* FIXED: Skill category headings now match subsection headings */
+/* FIXED: Skill category headings color to match subsection headings */
 .skill-category h3 {
     color: var(--text-color);  /* Changed from var(--secondary-color) */
     margin-bottom: 1rem;
