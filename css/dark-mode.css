@@ -597,6 +597,11 @@ footer {
     to { opacity: 1; transform: translateY(0); }
 }
 
+.no-fade {
+    animation: none !important;
+    transition: none !important;
+}
+
 .card {
     animation: fadeIn 0.1s ease-out forwards;
 }
