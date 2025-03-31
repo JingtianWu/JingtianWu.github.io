@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styling for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Add some padding to sections to prevent header overlap */
+        section {
+            padding-top: 20px;
+        }
+        
+        /* Add space between sections */
+        main section:not(:first-child) {
+            margin-top: 40px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -28,17 +44,18 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">About</a></li>
-                    <li><a href="research.html">Research</a></li>
-                    <li><a href="projects.html">Projects</a></li>
-                    <li><a href="publications.html">Publications</a></li>
-                    <li><a href="teaching.html">Teaching</a></li>
+                    <li><a href="#about" class="active">About</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#teaching">Teaching</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <main>
+        <!-- About Section -->
         <section id="about" class="container">
             <h2>About Me</h2>
             <div class="card">
@@ -116,6 +133,172 @@
                 </div>
             </div>
         </section>
+
+        <!-- Research Section -->
+        <section id="research" class="container">
+            <h2>Research</h2>
+            
+            <div class="research-item card">
+                <div class="research-header">
+                    <h3>Self-Evolving LLM via Automated High-Quality Dataset Curation</h3>
+                    <p class="date">Spring 2025 - Present</p>
+                </div>
+                <p class="advisor">Independent Researcher advised by Prof. Claire Cardie</p>
+                <p>Developing a framework for LLMs to dynamically curate high-quality datasets for self-fine-tuning.</p>
+            </div>
+            
+            <div class="research-item card">
+                <div class="research-header">
+                    <h3>Culturally and Temporally Contextualized Lyric Generation</h3>
+                    <p class="date">Spring 2025 - Present</p>
+                </div>
+                <p class="advisor">Researcher advised by Prof. Matthew Wilkens</p>
+                <p>Developing a lyric generation system that adapts to cultural and temporal contexts and can be personalized by users.</p>
+            </div>
+            
+            <div class="research-item card">
+                <div class="research-header">
+                    <h3>Automatic Code Generation System</h3>
+                    <p class="date">Fall 2024</p>
+                </div>
+                <p class="advisor">Independent Researcher advised by Prof. Claire Cardie and Wenting Zhao</p>
+                <p>Designing an automated code generation system on "Commit-0" benchmark.</p>
+            </div>
+            
+            <div class="research-item card">
+                <div class="research-header">
+                    <h3>Reasoning Court (RC) Framework for Enhancing Accuracy in Multi-Hop Question Datasets</h3>
+                    <p class="date">Summer 2024 - Present</p>
+                </div>
+                <p class="advisor">BURE Researcher advised by Prof. Claire Cardie and Wenting Zhao</p>
+                <p>Developed a framework that improves LLM performance on multi-hop reasoning and fact-verification benchmarks, surpassing previous best-performing baselines.</p>
+            </div>
+            
+            <div class="research-item card">
+                <div class="research-header">
+                    <h3>Computer Music Synthesis and Composition</h3>
+                    <p class="date">Summer 2023</p>
+                </div>
+                <p class="advisor">Researcher advised by Prof. Roger B. Dannenberg</p>
+                <p>Researched algorithmic composition, digital audio theory, sound synthesis algorithms, and Nyquist computations.</p>
+            </div>
+            
+            <div class="research-item card">
+                <div class="research-header">
+                    <h3>Algorithms for Big Data</h3>
+                    <p class="date">Summer 2021</p>
+                </div>
+                <p class="advisor">Researcher advised by Prof. David Woodruff</p>
+                <ul>
+                    <li>Building a Model to convert images of humans into cartoon anime.</li>
+                    <li>Designed a lightweight GAN to process faster and use less memory, suitable for smartphone applications.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="container">
+            <h2>Projects</h2>
+            
+            <div class="project-item card">
+                <div class="project-header">
+                    <div class="project-title">
+                        <h3>REVIEWER2: A Two-Stage LLM Framework for Academic Peer Review Generation</h3>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="btn btn-outline"><i class="fas fa-link"></i> Website</a>
+                        <a href="https://github.com/JingtianWu/REVIEWER2" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-description">
+                        <p>Main lead in developing the user-friendly web interface for REVIEWER2, a two-stage LLM framework for academic peer review generation.</p>
+                        <p>Collaboration with Prof. Thorsten Joachims and PhD student Zhaolin Gao.</p>
+                        <p><strong>Featured in the <a href="https://news.cornell.edu/stories/2024/04/ai-apps-and-robots-take-home-awards-boom">Cornell Chronicle</a> as part of BOOM 2024.</strong></p>
+                        <div class="project-tags">
+                            <span class="tag">NLP</span>
+                            <span class="tag">LLMs</span>
+                            <span class="tag">Web Development</span>
+                            <span class="tag">Academic Tools</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-item card">
+                <div class="project-header">
+                    <div class="project-title">
+                        <h3>3KChess: Game Design</h3>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-description">
+                        <p>Designed a 3-player chess variant in OCaml inspired by Romance of the Three Kingdoms.</p>
+                        <p>Course project for Data Structures and Functional Programming.</p>
+                        <div class="project-tags">
+                            <span class="tag">OCaml</span>
+                            <span class="tag">Game Design</span>
+                            <span class="tag">Functional Programming</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="container">
+            <h2>Publications</h2>
+            
+            <div class="publication-item card">
+                <div class="publication-year">2023</div>
+                <div class="publication-content">
+                    <h3>Algorithmic Composition of Music Utilizing the Digits of Pi</h3>
+                    <p class="authors"><strong>Jingtian Wu</strong></p>
+                    <p class="venue">Computer Science and Intelligent Communication (CSIC 2023)</p>
+                    <div class="publication-links">
+                        <a href="https://drpress.org/ojs/index.php/HSET/article/view/18427/17963" class="btn btn-small" target="_blank">
+                            <i class="fas fa-file-pdf"></i> CSIC Paper
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="publication-item card">
+                <div class="publication-year">2021</div>
+                <div class="publication-content">
+                    <h3>Turn Real People into Anime Cartoonization</h3>
+                    <p class="authors">Xuan Zhao*, Yuxin Zhou, <strong>Jingtian Wu</strong>, Qinjia Xu, Yunpeng Zhang</p>
+                    <p class="venue">International Conference on Computer Engineering and Communication Engineering (ICCECE 2021)</p>
+                    <div class="publication-links">
+                        <a href="https://ieeexplore.ieee.org/document/9342433" class="btn btn-small" target="_blank">
+                            <i class="fas fa-file-pdf"></i> IEEE Paper
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teaching Section -->
+        <section id="teaching" class="container">
+            <h2>Teaching Experience</h2>
+            
+            <div class="teaching-item card">
+                <div class="teaching-header">
+                    <h3>CS 3700: Foundations of AI Reasoning and Decision-Making</h3>
+                    <p class="date">Fall 2024</p>
+                </div>
+                <p class="position">Teaching Assistant</p>
+                <p class="institution">Department of Computer Science, Cornell University</p>
+                <div class="teaching-description">
+                    <p>Responsibilities included:</p>
+                    <ul>
+                        <li>Held weekly office hours to assist students with course concepts and assignments</li>
+                        <li>Graded homework assignments and exams</li>
+                        <li>Conducted discussion sections to reinforce material covered in lectures</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -125,5 +308,34 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script>
+        // JavaScript to handle active navigation links based on scroll position
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            
+            function updateActiveLink() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 200)) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentSection}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Call once on page load
+        });
+    </script>
 </body>
 </html>
