@@ -23,7 +23,24 @@
             margin-top: 40px;
         }
         
-        /* Sticky navigation styles */
+        /* ===== FIXED STICKY NAVIGATION STYLES ===== */
+        /* Wrapper for consistent positioning */
+        .nav-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        
+        /* Base navigation styles */
+        header nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 0; /* Changed to include bottom padding */
+            width: 100%;
+        }
+        
+        /* Sticky navigation styles - maintain exact same layout */
         header nav.sticky {
             position: fixed;
             top: 0;
@@ -32,22 +49,21 @@
             background-color: var(--card-color);
             box-shadow: var(--shadow);
             z-index: 1000;
-            padding: 15px 0;
             border-top: none;
+            padding: 1rem 0; /* Match exactly with non-sticky */
         }
         
-        /* Critical fix: Make sure the container inside sticky nav maintains proper layout */
-        header nav.sticky .sticky-container {
+        /* Ensure container styling is identical */
+        .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            align-items: center;
+            padding: 0 15px;
         }
         
-        /* Make sure ul maintains flex-grow inside sticky nav */
-        header nav.sticky ul {
-            flex-grow: 1;
+        /* Theme toggle positioning fix */
+        .theme-toggle {
+            margin-left: auto;
         }
         
         /* Add padding to main when nav is sticky */
@@ -74,19 +90,23 @@
                     </div>
                 </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#about" class="active">About Me</a></li>
-                    <li><a href="#research">Research</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                </ul>
-                <!-- Dark Mode Toggle Button -->
-                <button class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-moon dark-icon theme-icon"></i>
-                    <i class="fas fa-sun light-icon theme-icon"></i>
-                </button>
-            </nav>
+            <div class="nav-wrapper">
+                <nav>
+                    <div class="container">
+                        <ul>
+                            <li><a href="#about" class="active">About Me</a></li>
+                            <li><a href="#research">Research</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="#publications">Publications</a></li>
+                        </ul>
+                        <!-- Dark Mode Toggle Button -->
+                        <button class="theme-toggle" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark-icon theme-icon"></i>
+                            <i class="fas fa-sun light-icon theme-icon"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
 
@@ -352,36 +372,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const nav = document.querySelector('header nav');
+            const navContainer = nav.querySelector('.container');
             const navOffsetTop = nav.offsetTop;
             
             function handleScroll() {
                 if (window.pageYOffset >= navOffsetTop) {
                     if (!nav.classList.contains('sticky')) {
                         nav.classList.add('sticky');
-                        
-                        // Wrap the content in a container to maintain proper alignment
-                        const navContent = nav.innerHTML;
-                        nav.innerHTML = `<div class="sticky-container">${navContent}</div>`;
-                        
                         document.body.classList.add('has-sticky-nav');
-                        
-                        // Re-attach event listener to theme toggle button
-                        const themeToggle = document.querySelector('.sticky-container .theme-toggle');
-                        if (themeToggle) {
-                            themeToggle.addEventListener('click', function() {
-                                document.body.classList.toggle('dark-mode');
-                                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-                            });
-                        }
                     }
                 } else {
                     if (nav.classList.contains('sticky')) {
-                        // Restore original content
-                        const stickyContainer = nav.querySelector('.sticky-container');
-                        if (stickyContainer) {
-                            nav.innerHTML = stickyContainer.innerHTML;
-                        }
-                        
                         nav.classList.remove('sticky');
                         document.body.classList.remove('has-sticky-nav');
                     }
