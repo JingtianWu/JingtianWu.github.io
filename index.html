@@ -24,7 +24,7 @@
         }
         
         /* Sticky Navigation Styles */
-        header nav.sticky {
+        nav.sticky {
             position: fixed;
             top: 0;
             left: 0;
@@ -32,10 +32,11 @@
             background-color: var(--card-color);
             box-shadow: var(--shadow);
             z-index: 1000;
-            padding: 15px 0;
+            padding: 1rem 0;
+            border-top: none;
         }
         
-        /* Add padding to body when nav is sticky to prevent content jump */
+        /* Adjust main content to prevent jumping when nav becomes sticky */
         body.has-sticky-nav main {
             padding-top: 60px;
         }
