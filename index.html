@@ -67,6 +67,12 @@
             padding-top: 70px;
         }
         
+        /* Override CSS transitions for profile content to prevent fade effect */
+        .profile-content h1,
+        .profile-content p {
+            transition: none !important;
+        }
+        
         /* Media query for responsive design */
         @media (max-width: 768px) {
             .sticky-nav .container {
