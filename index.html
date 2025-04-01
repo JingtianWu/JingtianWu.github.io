@@ -22,54 +22,6 @@
         main section:not(:first-child) {
             margin-top: 40px;
         }
-        
-        /* ===== FIXED STICKY NAVIGATION STYLES ===== */
-        /* Wrapper for consistent positioning */
-        .nav-wrapper {
-            position: relative;
-            width: 100%;
-        }
-        
-        /* Base navigation styles */
-        header nav {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            border-top: 1px solid var(--border-color);
-            padding: 1rem 0; /* Changed to include bottom padding */
-            width: 100%;
-        }
-        
-        /* Sticky navigation styles - maintain exact same layout */
-        header nav.sticky {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--card-color);
-            box-shadow: var(--shadow);
-            z-index: 1000;
-            border-top: none;
-            padding: 1rem 0; /* Match exactly with non-sticky */
-        }
-        
-        /* Ensure container styling is identical */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        /* Theme toggle positioning fix */
-        .theme-toggle {
-            margin-left: auto;
-        }
-        
-        /* Add padding to main when nav is sticky */
-        body.has-sticky-nav main {
-            padding-top: 70px;
-        }
     </style>
 </head>
 <body>
@@ -90,23 +42,19 @@
                     </div>
                 </div>
             </div>
-            <div class="nav-wrapper">
-                <nav>
-                    <div class="container">
-                        <ul>
-                            <li><a href="#about" class="active">About Me</a></li>
-                            <li><a href="#research">Research</a></li>
-                            <li><a href="#projects">Projects</a></li>
-                            <li><a href="#publications">Publications</a></li>
-                        </ul>
-                        <!-- Dark Mode Toggle Button -->
-                        <button class="theme-toggle" aria-label="Toggle dark mode">
-                            <i class="fas fa-moon dark-icon theme-icon"></i>
-                            <i class="fas fa-sun light-icon theme-icon"></i>
-                        </button>
-                    </div>
-                </nav>
-            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about" class="active">About Me</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                </ul>
+                <!-- Dark Mode Toggle Button -->
+                <button class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon dark-icon theme-icon"></i>
+                    <i class="fas fa-sun light-icon theme-icon"></i>
+                </button>
+            </nav>
         </div>
     </header>
 
@@ -367,69 +315,5 @@
 
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
-    
-    <!-- Fixed Sticky Navigation Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const nav = document.querySelector('header nav');
-            const navContainer = nav.querySelector('.container');
-            const navOffsetTop = nav.offsetTop;
-            
-            function handleScroll() {
-                if (window.pageYOffset >= navOffsetTop) {
-                    if (!nav.classList.contains('sticky')) {
-                        nav.classList.add('sticky');
-                        document.body.classList.add('has-sticky-nav');
-                    }
-                } else {
-                    if (nav.classList.contains('sticky')) {
-                        nav.classList.remove('sticky');
-                        document.body.classList.remove('has-sticky-nav');
-                    }
-                }
-                
-                // Update active section based on scroll position
-                const scrollPosition = window.pageYOffset;
-                const sections = document.querySelectorAll('section[id]');
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        document.querySelectorAll('nav a').forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${sectionId}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }
-            
-            // Handle smooth scrolling
-            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        const navHeight = nav.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - navHeight - 20;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            window.addEventListener('scroll', handleScroll);
-        });
-    </script>
 </body>
 </html>
