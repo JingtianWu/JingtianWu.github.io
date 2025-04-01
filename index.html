@@ -33,26 +33,18 @@
             box-shadow: var(--shadow);
             z-index: 1000;
             padding: 15px 0;
-            border-top: none;
         }
         
-        /* Critical fix: Make sure the container inside sticky nav maintains proper layout */
-        header nav.sticky .sticky-container {
+        /* Preserve the container width/positioning */
+        header nav.sticky .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            display: flex;
-            align-items: center;
         }
         
-        /* Make sure ul maintains flex-grow inside sticky nav */
-        header nav.sticky ul {
-            flex-grow: 1;
-        }
-        
-        /* Add padding to main when nav is sticky */
+        /* Add padding to body when nav is sticky */
         body.has-sticky-nav main {
-            padding-top: 70px;
+            padding-top: 60px;
         }
     </style>
 </head>
@@ -348,48 +340,35 @@
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
     
-    <!-- Fixed Sticky Navigation Script -->
+    <!-- Simple Sticky Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const nav = document.querySelector('header nav');
+            const navContainer = document.querySelector('header .container');
             const navOffsetTop = nav.offsetTop;
             
             function handleScroll() {
                 if (window.pageYOffset >= navOffsetTop) {
+                    // Make nav sticky
                     if (!nav.classList.contains('sticky')) {
                         nav.classList.add('sticky');
-                        
-                        // Wrap the content in a container to maintain proper alignment
-                        const navContent = nav.innerHTML;
-                        nav.innerHTML = `<div class="sticky-container">${navContent}</div>`;
-                        
                         document.body.classList.add('has-sticky-nav');
-                        
-                        // Re-attach event listener to theme toggle button
-                        const themeToggle = document.querySelector('.sticky-container .theme-toggle');
-                        if (themeToggle) {
-                            themeToggle.addEventListener('click', function() {
-                                document.body.classList.toggle('dark-mode');
-                                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-                            });
-                        }
                     }
                 } else {
+                    // Remove sticky
                     if (nav.classList.contains('sticky')) {
-                        // Restore original content
-                        const stickyContainer = nav.querySelector('.sticky-container');
-                        if (stickyContainer) {
-                            nav.innerHTML = stickyContainer.innerHTML;
-                        }
-                        
                         nav.classList.remove('sticky');
                         document.body.classList.remove('has-sticky-nav');
                     }
                 }
                 
-                // Update active section based on scroll position
+                // Update active links
+                updateActiveLinks();
+            }
+            
+            function updateActiveLinks() {
                 const scrollPosition = window.pageYOffset;
-                const sections = document.querySelectorAll('section[id]');
+                const sections = document.querySelectorAll('main section[id]');
                 
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop - 100;
@@ -407,7 +386,9 @@
                 });
             }
             
-            // Handle smooth scrolling
+            window.addEventListener('scroll', handleScroll);
+            
+            // Smooth scrolling
             document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -426,8 +407,6 @@
                     }
                 });
             });
-            
-            window.addEventListener('scroll', handleScroll);
         });
     </script>
 </body>
