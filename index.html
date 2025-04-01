@@ -23,27 +23,36 @@
             margin-top: 40px;
         }
         
-        /* Sticky nav container - exact copy of original container */
-        .nav-placeholder {
-            display: none;
-        }
-        
-        /* Sticky navigation styles */
-        nav.sticky {
+        /* Super simple sticky navigation - no changes to internal structure */
+        .sticky-nav-wrapper {
+            height: 0;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
             background-color: var(--card-color);
             box-shadow: var(--shadow);
-            z-index: 1000;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            border-top: none;
+        }
+        
+        .sticky-nav-wrapper.visible {
+            transform: translateY(0);
+        }
+        
+        /* Adjust main content padding for when sticky nav is visible */
+        body.has-sticky-nav main {
+            padding-top: 60px;
         }
     </style>
 </head>
 <body>
+    <!-- Sticky Nav Wrapper -->
+    <div class="sticky-nav-wrapper">
+        <!-- We'll clone the navigation here with JavaScript -->
+    </div>
+    
     <header>
         <div class="container">
             <div class="profile">
@@ -74,8 +83,6 @@
                     <i class="fas fa-sun light-icon theme-icon"></i>
                 </button>
             </nav>
-            <!-- Nav placeholder for when nav becomes sticky -->
-            <div class="nav-placeholder"></div>
         </div>
     </header>
 
@@ -337,85 +344,73 @@
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
     
-    <!-- Simple Sticky Navigation Script with Perfect Alignment -->
+    <!-- Simple Perfectly Aligned Sticky Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get references to elements
+            // Elements
             const header = document.querySelector('header');
-            const nav = document.querySelector('header nav');
-            const navPlaceholder = document.querySelector('.nav-placeholder');
-            const headerContainer = document.querySelector('header .container');
+            const originalNav = document.querySelector('header nav');
+            const stickyWrapper = document.querySelector('.sticky-nav-wrapper');
             
-            // Get the original nav's position and dimensions
-            let navTop = nav.offsetTop;
-            const navHeight = nav.offsetHeight;
+            // Get the container from the header
+            const container = document.querySelector('header .container');
             
-            // Store the original nav's position in the header
-            const navRect = nav.getBoundingClientRect();
-            const headerRect = headerContainer.getBoundingClientRect();
+            // Clone the original container to the sticky wrapper
+            const containerClone = container.cloneNode(true);
             
-            // Function to handle scrolling
+            // Remove the profile div from the clone, keep only the nav
+            const profileDiv = containerClone.querySelector('.profile');
+            if (profileDiv) {
+                containerClone.removeChild(profileDiv);
+            }
+            
+            // Add the clone to the sticky wrapper
+            stickyWrapper.appendChild(containerClone);
+            
+            // Get the cloned nav and theme toggle
+            const clonedNav = stickyWrapper.querySelector('nav');
+            const clonedThemeToggle = stickyWrapper.querySelector('.theme-toggle');
+            
+            // Add event listener to the cloned theme toggle
+            if (clonedThemeToggle) {
+                clonedThemeToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('dark-mode');
+                    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+                });
+            }
+            
+            // Handle sticky behavior on scroll
             function handleScroll() {
+                const headerNav = header.querySelector('nav');
+                const navOffsetTop = headerNav.offsetTop;
                 const scrollY = window.pageYOffset;
                 
-                if (scrollY > navTop) {
-                    // Make nav sticky
-                    if (!nav.classList.contains('sticky')) {
-                        nav.classList.add('sticky');
-                        
-                        // Create a placeholder to prevent layout shift
-                        navPlaceholder.style.height = navHeight + 'px';
-                        navPlaceholder.style.display = 'block';
-                        
-                        // Set nav width to match header container width
-                        const headerWidth = headerContainer.offsetWidth;
-                        const containerPadding = parseInt(window.getComputedStyle(headerContainer).paddingLeft) * 2;
-                        
-                        // Apply exact width of the container to the nav
-                        nav.style.paddingLeft = 0;
-                        nav.style.paddingRight = 0;
-                        
-                        // Create a container inside the sticky nav with exact dimensions
-                        if (!nav.querySelector('.nav-inner-container')) {
-                            const navContent = nav.innerHTML;
-                            nav.innerHTML = `<div class="nav-inner-container container">${navContent}</div>`;
-                            
-                            // Add event listener to theme toggle in sticky nav
-                            const themeToggle = nav.querySelector('.theme-toggle');
-                            if (themeToggle) {
-                                themeToggle.addEventListener('click', function() {
-                                    document.body.classList.toggle('dark-mode');
-                                    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-                                });
-                            }
-                        }
-                    }
+                if (scrollY >= navOffsetTop) {
+                    stickyWrapper.classList.add('visible');
+                    document.body.classList.add('has-sticky-nav');
                 } else {
-                    // Remove sticky
-                    if (nav.classList.contains('sticky')) {
-                        // Restore original nav content if needed
-                        const innerContainer = nav.querySelector('.nav-inner-container');
-                        if (innerContainer) {
-                            nav.innerHTML = innerContainer.innerHTML;
-                        }
-                        
-                        nav.classList.remove('sticky');
-                        nav.style.paddingLeft = '';
-                        nav.style.paddingRight = '';
-                        navPlaceholder.style.display = 'none';
-                    }
+                    stickyWrapper.classList.remove('visible');
+                    document.body.classList.remove('has-sticky-nav');
                 }
                 
-                // Update active section based on scroll position
+                // Update active links in both navigations
                 const sections = document.querySelectorAll('section[id]');
-                
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop - 100;
                     const sectionHeight = section.offsetHeight;
                     const sectionId = section.getAttribute('id');
                     
                     if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                        document.querySelectorAll('nav a').forEach(link => {
+                        // Update original nav
+                        document.querySelectorAll('header nav a').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                        
+                        // Update sticky nav
+                        document.querySelectorAll('.sticky-nav-wrapper nav a').forEach(link => {
                             link.classList.remove('active');
                             if (link.getAttribute('href') === `#${sectionId}`) {
                                 link.classList.add('active');
@@ -425,37 +420,36 @@
                 });
             }
             
-            // Handle smooth scrolling
-            document.addEventListener('click', function(e) {
-                const target = e.target.closest('nav a[href^="#"]');
-                
-                if (target) {
-                    e.preventDefault();
-                    const targetId = target.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        const navHeight = nav.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - navHeight - 20;
+            // Smooth scrolling function
+            function setupSmoothScrolling(navElement) {
+                navElement.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
                         
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            const navHeight = stickyWrapper.offsetHeight;
+                            const targetPosition = targetElement.offsetTop - navHeight - 20;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+            }
+            
+            // Set up smooth scrolling for both navs
+            setupSmoothScrolling(originalNav);
+            setupSmoothScrolling(clonedNav);
             
             // Add scroll event listener
             window.addEventListener('scroll', handleScroll);
             
-            // Handle window resize
-            window.addEventListener('resize', function() {
-                navTop = nav.offsetTop;
-                handleScroll();
-            });
-            
-            // Initial call to set up the state
+            // Initial check
             handleScroll();
         });
     </script>
