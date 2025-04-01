@@ -297,6 +297,32 @@ nav a:hover, nav a.active {
     border-bottom: 2px solid var(--primary-color);
 }
 
+/* Make regular nav match sticky nav layout */
+header nav {
+    width: 100%;
+}
+
+header nav .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Fix for the JavaScript implementation */
+header nav.sticky {
+    padding: 15px 0;
+}
+
+header nav.sticky .sticky-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
 /* Main Content Styles */
 main {
     padding: 2rem 0;
