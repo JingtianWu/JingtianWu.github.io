@@ -37,12 +37,14 @@
             background-color: var(--card-color);
             box-shadow: var(--shadow);
             z-index: 1000;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
         }
         
         .sticky-nav.visible {
-            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
         
         /* Apply the same container styles as the header container */
@@ -434,32 +436,66 @@
                 targetLinks.forEach(link => link.classList.add('active'));
             }
             
+            // Store the last state to prevent flickering
+            let isNavSticky = false;
+            let lastScrollPosition = 0;
+            
+            // Add debounce for scroll events
+            let scrollTimeout;
+            
             // Show/hide sticky nav based on scroll position
-            window.addEventListener('scroll', function() {
-                const headerBottom = header.offsetTop + header.offsetHeight;
-                const scrollPosition = window.scrollY;
+            function handleScroll() {
                 const headerNavTop = headerNav.offsetTop;
+                const scrollPosition = window.scrollY;
                 
-                if (scrollPosition > headerNavTop) {
-                    stickyNav.classList.add('visible');
-                    document.body.classList.add('has-sticky-nav');
-                } else {
-                    stickyNav.classList.remove('visible');
-                    document.body.classList.remove('has-sticky-nav');
+                // Add a small buffer zone (5px) to prevent flickering
+                const shouldBeSticky = scrollPosition > (headerNavTop + 5);
+                
+                // Only update the DOM if the state actually changed
+                if (shouldBeSticky !== isNavSticky) {
+                    isNavSticky = shouldBeSticky;
+                    
+                    if (shouldBeSticky) {
+                        stickyNav.classList.add('visible');
+                        document.body.classList.add('has-sticky-nav');
+                    } else {
+                        stickyNav.classList.remove('visible');
+                        document.body.classList.remove('has-sticky-nav');
+                    }
                 }
                 
-                // Update active section
-                const sections = document.querySelectorAll('section[id]');
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
+                // Update active section only on meaningful scroll
+                if (Math.abs(scrollPosition - lastScrollPosition) > 10) {
+                    lastScrollPosition = scrollPosition;
                     
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        updateActiveLink(sectionId);
-                    }
-                });
-            });
+                    // Clear the previous timeout
+                    clearTimeout(scrollTimeout);
+                    
+                    // Set a new timeout
+                    scrollTimeout = setTimeout(() => {
+                        const sections = document.querySelectorAll('section[id]');
+                        sections.forEach(section => {
+                            const sectionTop = section.offsetTop - 100;
+                            const sectionHeight = section.offsetHeight;
+                            const sectionId = section.getAttribute('id');
+                            
+                            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                                updateActiveLink(sectionId);
+                            }
+                        });
+                    }, 50); // Wait 50ms before updating
+                }
+            }
+            
+            // Use requestAnimationFrame for smooth performance
+            function onScroll() {
+                requestAnimationFrame(handleScroll);
+            }
+            
+            window.addEventListener('scroll', onScroll);
+            
+            // Initial call to set correct state on page load
+            handleScroll();
             
             // Handle smooth scrolling
             function handleNavLinkClick(e) {
