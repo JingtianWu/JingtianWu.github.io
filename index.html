@@ -24,7 +24,7 @@
         }
         
         /* Sticky Navigation Styles */
-        .sticky-nav {
+        header nav.sticky {
             position: fixed;
             top: 0;
             left: 0;
@@ -32,87 +32,16 @@
             background-color: var(--card-color);
             box-shadow: var(--shadow);
             z-index: 1000;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
+            padding: 15px 0;
         }
         
-        .sticky-nav.visible {
-            transform: translateY(0);
-        }
-        
-        .sticky-nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-        }
-        
-        .sticky-nav nav {
-            display: flex;
-            align-items: center;
-            border-top: none;
-            padding-top: 0;
-            width: 100%;
-        }
-        
-        .sticky-nav .site-title {
-            font-weight: 700;
-            color: var(--secondary-color);
-            margin-right: 2rem;
-            font-size: 1.2rem;
-        }
-        
-        /* Adjust main content to avoid overlap when sticky nav is visible */
-        body.sticky-nav-active main {
-            padding-top: 70px;
-        }
-        
-        /* Override CSS transitions for profile content to prevent fade effect */
-        .profile-content h1,
-        .profile-content p {
-            transition: none !important;
-        }
-        
-        /* Media query for responsive design */
-        @media (max-width: 768px) {
-            .sticky-nav .container {
-                flex-direction: column;
-                align-items: center;
-                padding: 10px 15px;
-            }
-            
-            .sticky-nav .site-title {
-                margin-bottom: 10px;
-                margin-right: 0;
-            }
-            
-            .sticky-nav nav ul {
-                justify-content: center;
-            }
+        /* Add padding to body when nav is sticky to prevent content jump */
+        body.has-sticky-nav main {
+            padding-top: 60px;
         }
     </style>
 </head>
 <body>
-    <!-- Sticky Navigation -->
-    <div class="sticky-nav">
-        <div class="container">
-            <div class="site-title">Jingtian Wu</div>
-            <nav>
-                <ul>
-                    <li><a href="#about" class="active">About Me</a></li>
-                    <li><a href="#research">Research</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                </ul>
-                <!-- Dark Mode Toggle Button -->
-                <button class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-moon dark-icon theme-icon"></i>
-                    <i class="fas fa-sun light-icon theme-icon"></i>
-                </button>
-            </nav>
-        </div>
-    </div>
-
     <header>
         <div class="container">
             <div class="profile">
@@ -403,93 +332,49 @@
 
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
+    
+    <!-- Sticky Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('header');
-            const stickyNav = document.querySelector('.sticky-nav');
-            const mainNav = document.querySelector('header nav');
-            const stickyNavLinks = document.querySelectorAll('.sticky-nav nav a');
-            const mainNavLinks = document.querySelectorAll('header nav a');
+            const nav = document.querySelector('header nav');
+            const navTop = nav.offsetTop;
             
-            // Sync theme toggles
-            const mainThemeToggle = document.querySelector('header .theme-toggle');
-            const stickyThemeToggle = document.querySelector('.sticky-nav .theme-toggle');
-            
-            stickyThemeToggle.addEventListener('click', function() {
-                // Trigger the click on the main theme toggle
-                mainThemeToggle.click();
-            });
-            
-            // Function to update active links
-            function updateActiveLink(targetId) {
-                // Remove active class from all links
-                mainNavLinks.forEach(link => link.classList.remove('active'));
-                stickyNavLinks.forEach(link => link.classList.remove('active'));
-                
-                // Add active class to links with matching href
-                const targetLinks = document.querySelectorAll(`a[href="#${targetId}"]`);
-                targetLinks.forEach(link => link.classList.add('active'));
+            function handleScroll() {
+                if (window.scrollY >= navTop) {
+                    document.body.classList.add('has-sticky-nav');
+                    nav.classList.add('sticky');
+                } else {
+                    document.body.classList.remove('has-sticky-nav');
+                    nav.classList.remove('sticky');
+                }
             }
             
-            // Handle scroll event to show/hide sticky nav
-            window.addEventListener('scroll', function() {
-                const headerBottom = header.offsetTop + header.offsetHeight;
+            window.addEventListener('scroll', handleScroll);
+            
+            // Highlight active section when scrolling
+            const sections = document.querySelectorAll('main section[id]');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            function highlightActiveSection() {
+                let scrollPosition = window.scrollY;
                 
-                if (window.pageYOffset > headerBottom) {
-                    stickyNav.classList.add('visible');
-                    document.body.classList.add('sticky-nav-active');
-                } else {
-                    stickyNav.classList.remove('visible');
-                    document.body.classList.remove('sticky-nav-active');
-                }
-                
-                // Check which section is currently in view
-                const sections = document.querySelectorAll('section[id]');
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop - 100;
                     const sectionHeight = section.offsetHeight;
                     const sectionId = section.getAttribute('id');
                     
-                    if (window.pageYOffset >= sectionTop && 
-                        window.pageYOffset < sectionTop + sectionHeight) {
-                        updateActiveLink(sectionId);
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
                     }
                 });
-            });
-            
-            // Handle click events on nav links for smooth scrolling
-            function handleNavLinkClick(e) {
-                const href = this.getAttribute('href');
-                if (href.startsWith('#')) {
-                    e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        // Get the position of the target element
-                        const headerHeight = stickyNav.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                        
-                        // Scroll to the target element
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Update active link
-                        updateActiveLink(targetId);
-                    }
-                }
             }
             
-            // Add click event listeners to all nav links
-            mainNavLinks.forEach(link => {
-                link.addEventListener('click', handleNavLinkClick);
-            });
-            
-            stickyNavLinks.forEach(link => {
-                link.addEventListener('click', handleNavLinkClick);
-            });
+            window.addEventListener('scroll', highlightActiveSection);
         });
     </script>
 </body>
