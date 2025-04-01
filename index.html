@@ -23,13 +23,8 @@
             margin-top: 40px;
         }
         
-        /* Sticky Navigation Styles */
-        .sticky-wrapper {
-            height: 0;
-            overflow: visible;
-        }
-        
-        .sticky-nav {
+        /* Sticky navigation styles */
+        header nav.sticky {
             position: fixed;
             top: 0;
             left: 0;
@@ -37,83 +32,26 @@
             background-color: var(--card-color);
             box-shadow: var(--shadow);
             z-index: 1000;
-            transform: translateY(-100%);
-            transition: transform 0.3s ease;
+            padding: 15px 0;
         }
         
-        .sticky-nav.visible {
-            transform: translateY(0);
-        }
-        
-        /* Apply the same container styles as the header container */
-        .sticky-nav .container {
+        /* Container for sticky nav to maintain layout */
+        header nav.sticky .sticky-container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 15px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
         }
         
-        /* Match the original nav styles exactly */
-        .sticky-nav nav {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            width: 100%;
-            padding: 1rem 0;
-        }
-        
-        .sticky-nav nav ul {
-            display: flex;
-            flex-grow: 1;
-        }
-        
-        .sticky-nav nav li {
-            margin-right: 1.5rem;
-        }
-        
-        .sticky-nav nav a {
-            color: var(--text-light);
-            font-weight: 500;
-            padding: 0.5rem 0;
-            border-bottom: 2px solid transparent;
-        }
-        
-        .sticky-nav nav a:hover, .sticky-nav nav a.active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        /* Adjust main content padding for when nav is sticky */
-        body.has-sticky-nav {
+        /* Add padding to body when nav is sticky */
+        body.has-sticky-nav main {
             padding-top: 60px;
         }
     </style>
 </head>
 <body>
-    <!-- Sticky Navigation -->
-    <div class="sticky-wrapper">
-        <div class="sticky-nav">
-            <div class="container">
-                <nav>
-                    <ul>
-                        <li><a href="#about" class="active">About Me</a></li>
-                        <li><a href="#research">Research</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#publications">Publications</a></li>
-                    </ul>
-                    <!-- Dark Mode Toggle Button -->
-                    <button id="sticky-theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon dark-icon theme-icon"></i>
-                        <i class="fas fa-sun light-icon theme-icon"></i>
-                    </button>
-                </nav>
-            </div>
-        </div>
-    </div>
-
     <header>
         <div class="container">
             <div class="profile">
@@ -139,7 +77,7 @@
                     <li><a href="#publications">Publications</a></li>
                 </ul>
                 <!-- Dark Mode Toggle Button -->
-                <button id="main-theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <button class="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-moon dark-icon theme-icon"></i>
                     <i class="fas fa-sun light-icon theme-icon"></i>
                 </button>
@@ -405,134 +343,83 @@
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
     
-    <!-- Sticky Navigation Script with Improvements -->
+    <!-- Simple Sticky Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('header');
-            const headerNav = document.querySelector('header nav');
-            const stickyNav = document.querySelector('.sticky-nav');
+            const navbar = document.querySelector('header nav');
+            const navbarOffsetTop = navbar.offsetTop;
             const headerNavLinks = document.querySelectorAll('header nav a');
-            const stickyNavLinks = document.querySelectorAll('.sticky-nav nav a');
+            const mainContent = document.querySelector('main');
             
-            // Sync theme toggles with unique IDs
-            const headerThemeToggle = document.getElementById('main-theme-toggle');
-            const stickyThemeToggle = document.getElementById('sticky-theme-toggle');
+            // Original content of the navbar
+            const originalContent = navbar.innerHTML;
             
-            // This ensures each toggle button has its own event listener
-            headerThemeToggle.addEventListener('click', function() {
-                toggleTheme();
-            });
-            
-            stickyThemeToggle.addEventListener('click', function() {
-                toggleTheme();
-            });
-            
-            // Extract the theme toggle function that was likely in dark-mode.js
-            function toggleTheme() {
-                document.body.classList.toggle('dark-mode');
-                // Update local storage to remember user preference
-                if (document.body.classList.contains('dark-mode')) {
-                    localStorage.setItem('theme', 'dark');
+            function handleScroll() {
+                if (window.pageYOffset >= navbarOffsetTop) {
+                    // Navigation is sticky
+                    if (!navbar.classList.contains('sticky')) {
+                        navbar.classList.add('sticky');
+                        
+                        // Wrap the existing content in a container to maintain layout
+                        if (!navbar.querySelector('.sticky-container')) {
+                            navbar.innerHTML = `<div class="sticky-container">${originalContent}</div>`;
+                        }
+                        
+                        document.body.classList.add('has-sticky-nav');
+                    }
                 } else {
-                    localStorage.setItem('theme', 'light');
-                }
-            }
-            
-            // Function to update active links
-            function updateActiveLink(targetId) {
-                // Remove active class from all links
-                headerNavLinks.forEach(link => link.classList.remove('active'));
-                stickyNavLinks.forEach(link => link.classList.remove('active'));
-                
-                // Add active class to links with matching href
-                const targetLinks = document.querySelectorAll(`a[href="#${targetId}"]`);
-                targetLinks.forEach(link => link.classList.add('active'));
-            }
-            
-            // Debounce function to limit the frequency of scroll event handling
-            function debounce(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => {
-                        clearTimeout(timeout);
-                        func(...args);
-                    };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                };
-            }
-            
-            // Show/hide sticky nav based on scroll position with debouncing
-            const handleScroll = debounce(function() {
-                const headerBottom = header.offsetTop + header.offsetHeight;
-                const scrollPosition = window.scrollY;
-                const headerNavTop = headerNav.offsetTop;
-                
-                if (scrollPosition > headerNavTop) {
-                    stickyNav.classList.add('visible');
-                    document.body.classList.add('has-sticky-nav');
-                } else {
-                    stickyNav.classList.remove('visible');
-                    document.body.classList.remove('has-sticky-nav');
+                    // Navigation is not sticky
+                    if (navbar.classList.contains('sticky')) {
+                        navbar.classList.remove('sticky');
+                        
+                        // Restore original content
+                        navbar.innerHTML = originalContent;
+                        
+                        document.body.classList.remove('has-sticky-nav');
+                    }
                 }
                 
-                // Update active section - use IntersectionObserver instead
-                // This part is handled separately
-            }, 10); // 10ms debounce for scroll events
-            
-            window.addEventListener('scroll', handleScroll);
-            
-            // Use IntersectionObserver to handle active section updates
-            const observerOptions = {
-                root: null,
-                rootMargin: "-100px 0px -50% 0px", // Adjusts when sections are considered "visible"
-                threshold: 0
-            };
-            
-            const sectionObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    // When a section becomes visible
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        updateActiveLink(id);
+                // Update active menu item based on scroll position
+                const scrollPosition = window.pageYOffset;
+                const sections = document.querySelectorAll('section[id]');
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        document.querySelectorAll('nav a').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
                     }
                 });
-            }, observerOptions);
+            }
             
-            // Observe all sections with IDs
-            document.querySelectorAll('section[id]').forEach(section => {
-                sectionObserver.observe(section);
-            });
+            // Add scroll event listener
+            window.addEventListener('scroll', handleScroll);
             
             // Handle smooth scrolling
-            function handleNavLinkClick(e) {
-                const href = this.getAttribute('href');
-                if (href.startsWith('#')) {
+            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const targetId = href.substring(1);
+                    
+                    const targetId = this.getAttribute('href').substring(1);
                     const targetElement = document.getElementById(targetId);
                     
                     if (targetElement) {
-                        const stickyNavHeight = stickyNav.classList.contains('visible') ? stickyNav.offsetHeight : 0;
-                        const targetPosition = targetElement.offsetTop - stickyNavHeight - 20;
+                        const navbarHeight = navbar.offsetHeight;
+                        const targetPosition = targetElement.offsetTop - navbarHeight - 20;
                         
                         window.scrollTo({
                             top: targetPosition,
                             behavior: 'smooth'
                         });
-                        
-                        updateActiveLink(targetId);
                     }
-                }
-            }
-            
-            // Add click handlers
-            headerNavLinks.forEach(link => {
-                link.addEventListener('click', handleNavLinkClick);
-            });
-            
-            stickyNavLinks.forEach(link => {
-                link.addEventListener('click', handleNavLinkClick);
+                });
             });
         });
     </script>
