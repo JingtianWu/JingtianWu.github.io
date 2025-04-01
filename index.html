@@ -22,9 +22,91 @@
         main section:not(:first-child) {
             margin-top: 40px;
         }
+        
+        /* Sticky Navigation Styles */
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-color);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .sticky-nav.visible {
+            transform: translateY(0);
+        }
+        
+        .sticky-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+        }
+        
+        .sticky-nav nav {
+            display: flex;
+            align-items: center;
+            border-top: none;
+            padding-top: 0;
+            width: 100%;
+        }
+        
+        .sticky-nav .site-title {
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-right: 2rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Adjust main content to avoid overlap when sticky nav is visible */
+        body.sticky-nav-active main {
+            padding-top: 70px;
+        }
+        
+        /* Media query for responsive design */
+        @media (max-width: 768px) {
+            .sticky-nav .container {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 15px;
+            }
+            
+            .sticky-nav .site-title {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            
+            .sticky-nav nav ul {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Sticky Navigation -->
+    <div class="sticky-nav">
+        <div class="container">
+            <div class="site-title">Jingtian Wu</div>
+            <nav>
+                <ul>
+                    <li><a href="#about" class="active">About Me</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                </ul>
+                <!-- Dark Mode Toggle Button -->
+                <button class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon dark-icon theme-icon"></i>
+                    <i class="fas fa-sun light-icon theme-icon"></i>
+                </button>
+            </nav>
+        </div>
+    </div>
+
     <header>
         <div class="container">
             <div class="profile">
@@ -315,5 +397,94 @@
 
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            const stickyNav = document.querySelector('.sticky-nav');
+            const mainNav = document.querySelector('header nav');
+            const stickyNavLinks = document.querySelectorAll('.sticky-nav nav a');
+            const mainNavLinks = document.querySelectorAll('header nav a');
+            
+            // Sync theme toggles
+            const mainThemeToggle = document.querySelector('header .theme-toggle');
+            const stickyThemeToggle = document.querySelector('.sticky-nav .theme-toggle');
+            
+            stickyThemeToggle.addEventListener('click', function() {
+                // Trigger the click on the main theme toggle
+                mainThemeToggle.click();
+            });
+            
+            // Function to update active links
+            function updateActiveLink(targetId) {
+                // Remove active class from all links
+                mainNavLinks.forEach(link => link.classList.remove('active'));
+                stickyNavLinks.forEach(link => link.classList.remove('active'));
+                
+                // Add active class to links with matching href
+                const targetLinks = document.querySelectorAll(`a[href="#${targetId}"]`);
+                targetLinks.forEach(link => link.classList.add('active'));
+            }
+            
+            // Handle scroll event to show/hide sticky nav
+            window.addEventListener('scroll', function() {
+                const headerBottom = header.offsetTop + header.offsetHeight;
+                
+                if (window.pageYOffset > headerBottom) {
+                    stickyNav.classList.add('visible');
+                    document.body.classList.add('sticky-nav-active');
+                } else {
+                    stickyNav.classList.remove('visible');
+                    document.body.classList.remove('sticky-nav-active');
+                }
+                
+                // Check which section is currently in view
+                const sections = document.querySelectorAll('section[id]');
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (window.pageYOffset >= sectionTop && 
+                        window.pageYOffset < sectionTop + sectionHeight) {
+                        updateActiveLink(sectionId);
+                    }
+                });
+            });
+            
+            // Handle click events on nav links for smooth scrolling
+            function handleNavLinkClick(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // Get the position of the target element
+                        const headerHeight = stickyNav.offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                        
+                        // Scroll to the target element
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active link
+                        updateActiveLink(targetId);
+                    }
+                }
+            }
+            
+            // Add click event listeners to all nav links
+            mainNavLinks.forEach(link => {
+                link.addEventListener('click', handleNavLinkClick);
+            });
+            
+            stickyNavLinks.forEach(link => {
+                link.addEventListener('click', handleNavLinkClick);
+            });
+        });
+    </script>
 </body>
 </html>
