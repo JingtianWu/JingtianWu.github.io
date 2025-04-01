@@ -24,7 +24,7 @@
         }
         
         /* Sticky navigation styles */
-        header nav.sticky {
+        nav.sticky {
             position: fixed;
             top: 0;
             left: 0;
@@ -35,17 +35,7 @@
             padding: 15px 0;
         }
         
-        /* Container for sticky nav to maintain layout */
-        header nav.sticky .sticky-container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        /* Add padding to body when nav is sticky */
+        /* Add padding to main when nav is sticky */
         body.has-sticky-nav main {
             padding-top: 60px;
         }
@@ -346,40 +336,19 @@
     <!-- Simple Sticky Navigation Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const navbar = document.querySelector('header nav');
-            const navbarOffsetTop = navbar.offsetTop;
-            const headerNavLinks = document.querySelectorAll('header nav a');
-            const mainContent = document.querySelector('main');
-            
-            // Original content of the navbar
-            const originalContent = navbar.innerHTML;
+            const nav = document.querySelector('header nav');
+            const navOffsetTop = nav.offsetTop;
             
             function handleScroll() {
-                if (window.pageYOffset >= navbarOffsetTop) {
-                    // Navigation is sticky
-                    if (!navbar.classList.contains('sticky')) {
-                        navbar.classList.add('sticky');
-                        
-                        // Wrap the existing content in a container to maintain layout
-                        if (!navbar.querySelector('.sticky-container')) {
-                            navbar.innerHTML = `<div class="sticky-container">${originalContent}</div>`;
-                        }
-                        
-                        document.body.classList.add('has-sticky-nav');
-                    }
+                if (window.pageYOffset >= navOffsetTop) {
+                    nav.classList.add('sticky');
+                    document.body.classList.add('has-sticky-nav');
                 } else {
-                    // Navigation is not sticky
-                    if (navbar.classList.contains('sticky')) {
-                        navbar.classList.remove('sticky');
-                        
-                        // Restore original content
-                        navbar.innerHTML = originalContent;
-                        
-                        document.body.classList.remove('has-sticky-nav');
-                    }
+                    nav.classList.remove('sticky');
+                    document.body.classList.remove('has-sticky-nav');
                 }
                 
-                // Update active menu item based on scroll position
+                // Update active section based on scroll position
                 const scrollPosition = window.pageYOffset;
                 const sections = document.querySelectorAll('section[id]');
                 
@@ -399,9 +368,6 @@
                 });
             }
             
-            // Add scroll event listener
-            window.addEventListener('scroll', handleScroll);
-            
             // Handle smooth scrolling
             document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
@@ -411,8 +377,8 @@
                     const targetElement = document.getElementById(targetId);
                     
                     if (targetElement) {
-                        const navbarHeight = navbar.offsetHeight;
-                        const targetPosition = targetElement.offsetTop - navbarHeight - 20;
+                        const navHeight = nav.offsetHeight;
+                        const targetPosition = targetElement.offsetTop - navHeight - 20;
                         
                         window.scrollTo({
                             top: targetPosition,
@@ -421,6 +387,8 @@
                     }
                 });
             });
+            
+            window.addEventListener('scroll', handleScroll);
         });
     </script>
 </body>
