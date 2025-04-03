@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');
+    const profileImg = document.getElementById('profile-img');
     const body = document.body;
     
     // Check for saved user preference
@@ -24,6 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
         themeToggle.addEventListener('click', function() {
             // Toggle dark mode class on body
             body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                profileImg.src = "img/profile_dark.JPG";
+            } else {
+                profileImg.src = "img/profile.JPG";
+            }
             
             // Save user preference
             if (body.classList.contains('dark-mode')) {
