@@ -22,6 +22,10 @@
         main section:not(:first-child) {
             margin-top: 40px;
         }
+        
+        .card p + p {
+            margin-top: 0.75rem;
+        }
     </style>
 </head>
 <body>
@@ -48,6 +52,9 @@
                     <li><a href="#research">Research</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#publications">Publications</a></li>
+                    <li><a href="#teaching">Teaching</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#personal">Personal Interests</a></li>
                 </ul>
                 <!-- Dark Mode Toggle Button -->
                 <button class="theme-toggle" aria-label="Toggle dark mode">
@@ -63,11 +70,9 @@
         <section id="about" class="container">
             <h2>About Me</h2>
             <div class="card">
-                <p>I am a junior majoring in Computer Science and minoring in Artificial Intelligence at Cornell University, where I am fortunate to be advised by <a href="https://www.cs.cornell.edu/home/cardie/">Claire Cardie</a>. I have also collaborated with <a href="https://www.cs.cornell.edu/people/tj/">Thorsten Joachims</a> and <a href="https://zhaolingao.github.io/">Zhaolin Gao</a> on developing a demonstration system for LLM-based academic review generation.</p>
-                
-                <br>
+                <p>I am a senior majoring in Computer Science and minoring in Artificial Intelligence at Cornell University, where I am fortunate to be advised by <a href="https://www.cs.cornell.edu/home/cardie/">Claire Cardie</a>. I have also collaborated with <a href="https://www.cs.cornell.edu/people/tj/">Thorsten Joachims</a> and <a href="https://zhaolingao.github.io/">Zhaolin Gao</a> on developing a demonstration system for LLM-based academic review generation.</p>
 
-                <p>My research interests primarily focus on Natural Language Processing (NLP), particularly centered around enhancing the reasoning capabilities and real-world understanding of Large Language Models (LLMs). I am deeply motivated by the ambition to create self-evolving models capable of autonomous learning and continuous adaptation. I am also interested in multimodal learning and in exploring interdisciplinary applications of NLP in domains such as medicine and music.</p>
+                <p>My research interests include natural language processing, machine learning, and reinforcement learning. I am especially drawn to enhancing the reasoning and real-world understanding of large language models; designing self-evolving models capable of continual improvement; extending LLMs to multimodal learning; and exploring interdisciplinary applications across diverse domains.</p>
             </div>
         </section>
 
@@ -77,29 +82,39 @@
             
             <div class="research-item card">
                 <div class="research-header">
-                    <h3>Behavioral Evaluation and Control in AI‑Simulated Patients</h3>
-                    <p class="date">Summer 2025 – Present</p>
+                    <h3>Behavioral Evaluation and Control in AI-Simulated Patients</h3>
+                    <p class="date">Summer 2025 – Present</p>
                 </div>
-                <p class="advisor">Research Assistant working with <a href="https://yannhicke.github.io/">Yann Hicke</a> and advised by <a href="https://www.cs.cornell.edu/home/cardie/">Claire&nbsp;Cardie</a></p>
-                <p>Investigating behavioral consistency in LLM‑driven simulated patients for medical training and devising supervised‑plus‑RL methods to detect and control undesirable behaviors.</p>
+                <p class="advisor">Advisor: <a href="https://www.cs.cornell.edu/home/cardie/">Claire&nbsp;Cardie</a>, Collaborator: <a href="https://yannhicke.github.io/">Yann&nbsp;Hicke</a></p>
+                <ul>
+                    <li>Investigating behavioral consistency in large language models used as AI-simulated patients for medical education.</li>
+                    <li>Developing methods to detect and control these behaviors using supervised classifiers, multi-agent systems, and reinforcement learning, enabling more realistic and pedagogically aligned simulations.</li>
+                </ul>
             </div>
 
             <div class="research-item card">
                 <div class="research-header">
                     <h3>OmniWizz — Multimodal Inspirational Tool</h3>
-                    <p class="date">Summer 2025 – Present</p>
+                    <p class="date">Summer 2025 – Present</p>
                 </div>
-                <p class="advisor">Researcher & Lead Developer</p>
-                <p>Created a unified system that accepts any mix of text, image, or audio and returns cross‑modal inspirational content to boost creative workflows.</p>
+                <p class="advisor">Advisors: <a href="https://www.yang-qi.me/">Qi&nbsp;Yang</a> and <a href="https://leshed.infosci.cornell.edu/">Gilly&nbsp;Leshed</a></p>
+                <ul>
+                    <li>Addressed the need for a tool to inspire musical creativity by enabling seamless transformation across text, image, and audio, fostering cross-modal idea generation and exploration.</li>
+                    <li>Designed and implemented the full-stack architecture for a unified multimodal framework, delivering flexible input–output combinations to empower diverse and innovative creative workflows. <a href="https://jingtianwu.github.io/OmniWizz/" target="_blank" rel="noopener noreferrer">[View Demo]</a></li>
+                </ul>
             </div>
 
             <div class="research-item card">
                 <div class="research-header">
-                    <h3>Automated Fine‑Tuning Dataset Creation via Knowledge Map Expansion</h3>
-                    <p class="date">Spring 2025</p>
+                    <h3>Automatic Synthetic Data Generation</h3>
+                    <p class="date">Spring 2025</p>
                 </div>
-                <p class="advisor">Independent Researcher advised by <a href="https://www.cs.cornell.edu/home/cardie/">Claire&nbsp;Cardie</a></p>
-                <p>Developed an LLM‑based framework that builds hierarchical medical knowledge maps and auto‑generates multiple‑choice QA datasets for efficient self‑supervised fine‑tuning.</p>
+                <p class="advisor">Advisor: <a href="https://www.cs.cornell.edu/home/cardie/">Claire&nbsp;Cardie</a></p>
+                <ul>
+                    <li>Exploring automated dataset construction as a step toward <strong>self-evolving models</strong>, focusing on <strong>scalable synthetic data generation</strong> for continual domain adaptation in medicine.</li>
+                    <li>Built a hierarchical knowledge map expansion pipeline that recursively generates 226 subfields and produces 2.9K+ expert–student dialogues and MCQA items without human annotation.</li>
+                    <li>Fine-tuned a compact student model, achieving <strong>+6.76% accuracy over baseline</strong> while using <strong>6.4× fewer training samples</strong> than supervised methods.</li>
+                </ul>
             </div>
             
             <div class="research-item card">
@@ -107,8 +122,12 @@
                     <h3>Culturally and Temporally Contextualized Lyric Generation</h3>
                     <p class="date">Spring 2025</p>
                 </div>
-                <p class="advisor">Researcher advised by <a href="https://infosci.cornell.edu/content/wilkens">Matthew Wilkens</a></p>
-                <p>Developing a lyric generation system that adapts to cultural and temporal contexts.</p>
+                <p class="advisor">Advisor: <a href="https://infosci.cornell.edu/content/wilkens">Matthew&nbsp;Wilkens</a></p>
+                <ul>
+                    <li>Investigating how to adapt large language models for lyric generation that is culturally, temporally, and emotionally grounded.</li>
+                    <li>Curated a 31,000-song corpus and fine-tuned LLaMA 3.1 8B with LoRA for context-aware generation.</li>
+                    <li>Achieved <strong>+67.4% ROUGE-2</strong> and <strong>+18.9% human ratings</strong> over baseline systems.</li>
+                </ul>
             </div>
             
             <div class="research-item card">
@@ -116,17 +135,24 @@
                     <h3>Automatic Code Generation System</h3>
                     <p class="date">Fall 2024</p>
                 </div>
-                <p class="advisor">Independent Researcher advised by <a href="https://www.cs.cornell.edu/home/cardie/">Claire Cardie</a> and <a href="https://wenting-zhao.github.io/">Wenting Zhao</a></p>
-                <p>Developed an automated code‑generation system using Aider on the “Commit‑0” benchmark and explored multi‑agent collaboration, rollback, curriculum learning, and tree‑search planning to boost performance.</p>
+                <p class="advisor">Advisors: <a href="https://www.cs.cornell.edu/home/cardie/">Claire&nbsp;Cardie</a> and <a href="https://wenting-zhao.github.io/">Wenting&nbsp;Zhao</a></p>
+                <ul>
+                    <li>Tackled the challenge of enabling LLM-based code generation to autonomously complete complex, multi-step software engineering tasks.</li>
+                    <li>Built a multi-agent framework with automated task discovery, curriculum learning, progress monitoring, and rollback recovery, and evaluated it on the Commit-0 benchmark.</li>
+                </ul>
             </div>
             
             <div class="research-item card">
                 <div class="research-header">
-                    <h3>Reasoning Court (RC) Framework for Enhancing Accuracy in Multi-Hop Question Datasets</h3>
-                    <p class="date">Summer 2024 - Spring 2025</p>
+                    <h3>Enhancing Multi-Hop Reasoning in LLMs</h3>
+                    <p class="date">Summer 2024</p>
                 </div>
-                <p class="advisor">BURE Researcher advised by <a href="https://www.cs.cornell.edu/home/cardie/">Claire Cardie</a> and <a href="https://wenting-zhao.github.io/">Wenting Zhao</a></p>
-                <p>Developed a framework that improves LLM performance on multi-hop reasoning and fact-verification benchmarks, surpassing previous best-performing few-shot prompting baselines.</p>
+                <p class="advisor">Advisors: <a href="https://www.cs.cornell.edu/home/cardie/">Claire&nbsp;Cardie</a> and <a href="https://wenting-zhao.github.io/">Wenting&nbsp;Zhao</a></p>
+                <ul>
+                    <li>Tackled LLM hallucinations and reasoning errors in multi-hop QA.</li>
+                    <li>Developed Reasoning Court, extending ReAct with two retrieval–reasoning agents and an LLM judge capable of selecting or synthesizing factually grounded, coherent answers.</li>
+                    <li>Outperformed few-shot prompting baselines on HotpotQA, FEVER, and MuSiQue, achieving up to +8.2% EM improvement while reducing LLM calls compared to hybrid baselines.</li>
+                </ul>
             </div>
             
             <div class="research-item card">
@@ -134,19 +160,20 @@
                     <h3>Computer Music Synthesis and Composition</h3>
                     <p class="date">Summer 2023</p>
                 </div>
-                <p class="advisor">Researcher advised by <a href="https://www.cs.cmu.edu/~rbd/">Roger B. Dannenberg</a></p>
-                <p>Researched algorithmic composition, digital audio theory, sound synthesis algorithms, and Nyquist computations.</p>
+                <p class="advisor">Advisor: <a href="https://www.cs.cmu.edu/~rbd/">Roger B. Dannenberg</a></p>
+                <ul>
+                    <li>Explored mapping the digits of π to the minor pentatonic scale to algorithmically compose music, simulating traditional Chinese instruments and producing an original countermelody.</li>
+                </ul>
             </div>
             
             <div class="research-item card">
                 <div class="research-header">
                     <h3>Algorithms for Big Data</h3>
-                    <p class="date">Summer 2021</p>
+                    <p class="date">Summer 2023</p>
                 </div>
-                <p class="advisor">Researcher advised by <a href="https://www.cs.cmu.edu/~dwoodruf/">David Woodruff</a></p>
+                <p class="advisor">Advisor: <a href="https://www.cs.cmu.edu/~dwoodruf/">David Woodruff</a></p>
                 <ul>
-                    <li>Building a Model to convert images of humans into cartoon anime.</li>
-                    <li>Designed a lightweight GAN to process faster and use less memory, suitable for smartphone applications.</li>
+                    <li>Addressed the high computational cost of GAN-based cartoonization for resource-constrained devices by developing LWAnimeGAN, reduced channel sizes, and removal of HourGlass blocks, reducing parameters by 8.8%, FLOPs by 56.1%, and inference time by 18.6% while preserving visual quality.</li>
                 </ul>
             </div>
         </section>
@@ -158,18 +185,16 @@
             <div class="project-item card">
                 <div class="project-header">
                     <div class="project-title">
-                        <h3>REVIEWER2: A Two-Stage LLM Framework for Academic Peer Review Generation</h3>
+                        <h3>LLM Framework for Academic Peer Review</h3>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="btn btn-outline"><i class="fas fa-link"></i> Website</a>
-                        <a href="https://github.com/JingtianWu/REVIEWER2" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/ZhaolinGao/Reviewer2" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
                     </div>
                 </div>
                 <div class="project-content">
                     <div class="project-description">
-                        <p>Main lead in developing the user-friendly web interface for REVIEWER2, a two-stage LLM framework for academic peer review generation.</p>
-                        <p>Collaboration with <a href="https://www.cs.cornell.edu/people/tj/">Thorsten Joachims</a> and <a href="https://zhaolingao.github.io/">Zhaolin Gao</a>.</p>
-                        <p><strong>Featured in the <a href="https://news.cornell.edu/stories/2024/04/ai-apps-and-robots-take-home-awards-boom">Cornell Chronicle</a> as part of BOOM 2024.</strong></p>
+                        <p>Led full-stack development of the demonstration system for the research paper <a href="https://arxiv.org/abs/2402.10886"><em>Reviewer2: Optimizing Review Generation Through Prompt Generation</em></a>, optimizing the system for interactive presentation.</p>
+                        <p>Presented the system at BOOM 2024 (Bits On Our Minds), featured in the <a href="https://news.cornell.edu/stories/2024/04/ai-apps-and-robots-take-home-awards-boom"><em>Cornell Chronicle</em></a>.</p>
                         <div class="project-tags">
                             <span class="tag">NLP</span>
                             <span class="tag">LLMs</span>
@@ -212,7 +237,7 @@
                     <p class="authors"><strong>Jingtian Wu</strong></p>
                     <p class="venue">Computer Science and Intelligent Communication (CSIC 2023)</p>
                     <div class="publication-links">
-                        <a href="https://drpress.org/ojs/index.php/HSET/article/view/18427/17963" class="btn btn-small" target="_blank">
+                        <a href="https://drpress.org/ojs/index.php/HSET/article/view/18427/17963" class="btn btn-small" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-file-pdf"></i> CSIC Paper
                         </a>
                     </div>
@@ -226,33 +251,22 @@
                     <p class="authors">Xuan Zhao*, Yuxin Zhou, <strong>Jingtian Wu</strong>, Qinjia Xu, Yunpeng Zhang</p>
                     <p class="venue">International Conference on Computer Engineering and Communication Engineering (ICCECE 2021)</p>
                     <div class="publication-links">
-                        <a href="https://ieeexplore.ieee.org/document/9342433" class="btn btn-small" target="_blank">
+                        <a href="https://ieeexplore.ieee.org/document/9342433" class="btn btn-small" target="_blank" rel="noopener noreferrer">
                             <i class="fas fa-file-pdf"></i> IEEE Paper
                         </a>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Activities Section -->
-        <section id="activities" class="container">
-            <h2>Activities</h2>
-            <div class="card">
-                <div class="activity">
-                    <h3>BOOM (BITS ON OUR MINDS) 2024</h3>
-                    <p>Presented "REVIEWER2" project to Cornell community and industry and featured in the <a href="https://news.cornell.edu/stories/2024/04/ai-apps-and-robots-take-home-awards-boom">Cornell Chronicle</a>.</p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Teaching Section (no navigation link) -->
+        <!-- Teaching Section -->
         <section id="teaching" class="container">
             <h2>Teaching Experience</h2>
             
             <div class="teaching-item card">
                 <div class="teaching-header">
                     <h3>CS 3700: Foundations of AI Reasoning and Decision-Making</h3>
-                    <p class="date">Fall 2024</p>
+                    <p class="date">Fall 2024 & Fall 2025</p>
                 </div>
                 <p class="position">Teaching Assistant</p>
                 <p class="institution">Department of Computer Science, Cornell University</p>
@@ -265,13 +279,14 @@
             <div class="card">
                 <div class="skills">
                     <div class="skill-category">
-                        <h3>Programming</h3>
+                        <h3>Languages</h3>
                         <ul class="skill-list">
                             <li>Python</li>
                             <li>JavaScript</li>
                             <li>Java</li>
                             <li>OCaml</li>
                             <li>LaTeX</li>
+                            <li>Markdown</li>
                         </ul>
                     </div>
                     <div class="skill-category">
