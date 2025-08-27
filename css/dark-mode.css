@@ -531,6 +531,38 @@ body.dark-mode .placeholder-img {
     margin-top: 0.5rem;
 }
 
+/* Personal Interests Section */
+.interests {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.interest-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.audio-btn {
+    margin-left: 0.5rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.audio-btn:hover {
+    background-color: var(--primary-dark);
+}
+
 /* Footer Styles */
 footer {
     background-color: var(--secondary-color);

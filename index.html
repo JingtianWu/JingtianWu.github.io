@@ -339,6 +339,8 @@
                     <div class="interest-item">
                         <i class="fas fa-music"></i>
                         <span>Music</span>
+                        <button id="play-music" class="audio-btn" aria-label="Play music"><i class="fas fa-play"></i></button>
+                        <audio id="music-player" src="audio_1.mp3"></audio>
                     </div>
                     <div class="interest-item">
                         <i class="fas fa-dumbbell"></i>
@@ -361,5 +363,18 @@
 
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
+    <script>
+        const music = document.getElementById('music-player');
+        const playBtn = document.getElementById('play-music');
+        playBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                music.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+    </script>
 </body>
 </html>
