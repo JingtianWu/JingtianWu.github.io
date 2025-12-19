@@ -480,9 +480,10 @@ section h2::after {
 }
 
 .music-item {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 0.75rem;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .music-label {
@@ -493,20 +494,21 @@ section h2::after {
 
 .music-player {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 0.75rem;
-    width: 100%;
 }
 
 .track {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 0.75rem;
+    gap: 0.5rem;
     align-items: center;
-    padding: 0.75rem;
+    padding: 0.5rem 0.6rem;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     background-color: rgba(75, 108, 183, 0.06);
+    min-width: 220px;
 }
 
 body.dark-mode .track {
@@ -522,8 +524,8 @@ body.dark-mode .track {
     color: #fff;
     border: none;
     border-radius: 10px;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -543,27 +545,30 @@ body.dark-mode .track {
 
 .track-meta {
     display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .track-title {
     font-weight: 600;
     color: var(--text-color);
+    font-size: 0.85rem;
+    white-space: nowrap;
 }
 
 .track-time {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--text-light);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
 
 .track-progress {
-    width: 100%;
+    width: 140px;
     cursor: pointer;
     accent-color: var(--primary-color);
-    height: 6px;
+    height: 5px;
     appearance: none;
     border-radius: 999px;
     background: var(--border-color);
@@ -575,7 +580,7 @@ body.dark-mode .track {
 }
 
 .track-progress::-webkit-slider-runnable-track {
-    height: 6px;
+    height: 5px;
     background: var(--border-color);
     border-radius: 999px;
 }
@@ -664,11 +669,21 @@ footer {
 
     .track {
         grid-template-columns: auto 1fr;
+        min-width: 100%;
     }
 
     .track-time {
         grid-column: 2;
         text-align: right;
+    }
+
+    .music-player {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .track-progress {
+        width: 100%;
     }
 }
 
