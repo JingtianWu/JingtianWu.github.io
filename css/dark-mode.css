@@ -236,12 +236,6 @@ header {
     object-position: center top;
 }
 
-.profile-placeholder {
-    color: white;
-    font-size: 2.5rem;
-    font-weight: bold;
-}
-
 .profile-content h1 {
     margin-bottom: 0.25rem;
     color: var(--secondary-color);
@@ -324,41 +318,9 @@ section h2::after {
     border-radius: 2px;
 }
 
-/* About Section */
-.education-item {
-    margin-bottom: 1.5rem;
-}
-
-.education-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
 .date {
     color: var(--text-light);
     font-size: 0.875rem;
-}
-
-.degree {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.profile-links {
-    margin: 1rem 0;
-    color: var(--text-light);
-}
-
-.profile-links a {
-    margin: 0 0.25rem;
-    color: var(--primary-color);
-}
-
-.profile-links a:hover {
-    color: var(--accent-color);
-    text-decoration: underline;
 }
 
 /* Skills Section */
@@ -428,27 +390,6 @@ section h2::after {
 .project-content {
     display: flex;
     gap: 1.5rem;
-}
-
-.project-image {
-    flex: 0 0 300px;
-}
-
-.placeholder-img {
-    background-color: #e9ecef;
-    width: 100%;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #adb5bd;
-    font-size: 1rem;
-    border-radius: 4px;
-}
-
-body.dark-mode .placeholder-img {
-    background-color: #1d232a;
-    color: #6e7681;
 }
 
 .project-description {
@@ -523,12 +464,6 @@ body.dark-mode .placeholder-img {
 .institution {
     color: var(--text-light);
     margin-bottom: 1rem;
-}
-
-.teaching-description ul {
-    list-style: disc;
-    padding-left: 1.5rem;
-    margin-top: 0.5rem;
 }
 
 /* Personal Interests Section */
@@ -636,12 +571,21 @@ footer {
 /* Image placeholders */
 .placeholder-img {
     position: relative;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-size: 1rem;
+    border-radius: 4px;
     background: linear-gradient(120deg, #e5e7eb 30%, #f3f4f6 38%, #f3f4f6 40%, #e5e7eb 48%);
     background-size: 200% 100%;
     animation: shine 1.5s infinite;
 }
 
 body.dark-mode .placeholder-img {
+    color: #6e7681;
     background: linear-gradient(120deg, #1d232a 30%, #2d333b 38%, #2d333b 40%, #1d232a 48%);
     background-size: 200% 100%;
 }

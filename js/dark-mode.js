@@ -2,16 +2,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Theme toggle functionality
     const themeToggle = document.querySelector('.theme-toggle');
-    // const profileImg = document.getElementById('profile-img');
     const body = document.body;
     
     // Check for saved user preference
     const savedTheme = localStorage.getItem('theme');
     
-    // Apply saved theme or default to system preference
-    if (savedTheme === 'dark') {
-        body.classList.add('dark-mode');
-    } else if (savedTheme === 'light') {
+    // Apply saved theme or default to dark
+    if (savedTheme === 'light') {
         body.classList.remove('dark-mode');
     } else {
         body.classList.add('dark-mode');
@@ -23,12 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Toggle dark mode class on body
             body.classList.toggle('dark-mode');
 
-            // if (document.body.classList.contains('dark-mode')) {
-            //     profileImg.src = "img/profile_dark.JPG";
-            // } else {
-            //     profileImg.src = "img/profile.JPG";
-            // }
-            
             // Save user preference
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('theme', 'dark');
@@ -104,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
             if (window.scrollY >= (sectionTop - 200)) {
                 currentSection = section.getAttribute('id');
             }
