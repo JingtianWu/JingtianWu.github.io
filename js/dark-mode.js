@@ -14,10 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (savedTheme === 'light') {
         body.classList.remove('dark-mode');
     } else {
-        // Check for system preference
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            body.classList.add('dark-mode');
-        }
+        body.classList.add('dark-mode');
     }
     
     // Toggle theme when button is clicked
@@ -40,17 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
-    // Listen for system preference changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (!localStorage.getItem('theme')) {
-            if (e.matches) {
-                body.classList.add('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-            }
-        }
-    });
     
     // Add animation to sections when they come into view
     const observeElements = document.querySelectorAll('.card');
