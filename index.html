@@ -297,13 +297,31 @@
                         <i class="fas fa-chess"></i>
                         <span>Chess (Peak Rating - Bullet: 2974, Blitz: 2674 on Chess.com)</span>
                     </div>
-                    <div class="interest-item">
-                        <i class="fas fa-music"></i>
-                        <span>Music</span>
-                        <button id="play-music" class="audio-btn" aria-label="Play music"><i class="fas fa-play"></i></button>
-                        <button id="play-music-2" class="audio-btn" aria-label="Play music 2"><i class="fas fa-play"></i></button>
-                        <audio id="music-player" src="music/audio_1.mp3"></audio>
-                        <audio id="music-player-2" src="music/audio_2.mp3"></audio>
+                    <div class="interest-item music-item">
+                        <div class="music-label">
+                            <i class="fas fa-music"></i>
+                            <span>Music</span>
+                        </div>
+                        <div class="music-player">
+                            <div class="track">
+                                <button class="track-toggle" aria-label="Play song 1"><i class="fas fa-play"></i></button>
+                                <div class="track-meta">
+                                    <div class="track-title">Song 1</div>
+                                    <input class="track-progress" type="range" min="0" max="0" value="0" aria-label="Song 1 progress">
+                                </div>
+                                <div class="track-time">0:00 / 0:00</div>
+                                <audio class="track-audio" src="music/audio_1.mp3"></audio>
+                            </div>
+                            <div class="track">
+                                <button class="track-toggle" aria-label="Play song 2"><i class="fas fa-play"></i></button>
+                                <div class="track-meta">
+                                    <div class="track-title">Song 2</div>
+                                    <input class="track-progress" type="range" min="0" max="0" value="0" aria-label="Song 2 progress">
+                                </div>
+                                <div class="track-time">0:00 / 0:00</div>
+                                <audio class="track-audio" src="music/audio_2.mp3"></audio>
+                            </div>
+                        </div>
                     </div>
                     <div class="interest-item">
                         <i class="fas fa-dumbbell"></i>
@@ -327,29 +345,69 @@
     <!-- Changed from script.js to dark-mode.js -->
     <script src="js/dark-mode.js"></script>
     <script>
-        const music = document.getElementById('music-player');
-        const musicTwo = document.getElementById('music-player-2');
-        const playBtn = document.getElementById('play-music');
-        const playBtnTwo = document.getElementById('play-music-2');
+        const tracks = document.querySelectorAll('.track');
 
-        playBtn.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                music.pause();
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        const formatTime = (seconds) => {
+            if (!Number.isFinite(seconds)) {
+                return '0:00';
             }
-        });
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        };
 
-        playBtnTwo.addEventListener('click', () => {
-            if (musicTwo.paused) {
-                musicTwo.play();
-                playBtnTwo.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                musicTwo.pause();
-                playBtnTwo.innerHTML = '<i class="fas fa-play"></i>';
-            }
+        const pauseOtherTracks = (currentAudio) => {
+            tracks.forEach(track => {
+                const audio = track.querySelector('.track-audio');
+                const toggle = track.querySelector('.track-toggle');
+                if (audio !== currentAudio && !audio.paused) {
+                    audio.pause();
+                    toggle.innerHTML = '<i class="fas fa-play"></i>';
+                    track.classList.remove('is-playing');
+                }
+            });
+        };
+
+        tracks.forEach(track => {
+            const audio = track.querySelector('.track-audio');
+            const toggle = track.querySelector('.track-toggle');
+            const progress = track.querySelector('.track-progress');
+            const time = track.querySelector('.track-time');
+
+            const updateTime = () => {
+                progress.value = audio.currentTime;
+                time.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+            };
+
+            audio.addEventListener('loadedmetadata', () => {
+                progress.max = audio.duration || 0;
+                updateTime();
+            });
+
+            audio.addEventListener('timeupdate', updateTime);
+
+            audio.addEventListener('ended', () => {
+                toggle.innerHTML = '<i class="fas fa-play"></i>';
+                track.classList.remove('is-playing');
+            });
+
+            toggle.addEventListener('click', () => {
+                if (audio.paused) {
+                    pauseOtherTracks(audio);
+                    audio.play();
+                    toggle.innerHTML = '<i class="fas fa-pause"></i>';
+                    track.classList.add('is-playing');
+                } else {
+                    audio.pause();
+                    toggle.innerHTML = '<i class="fas fa-play"></i>';
+                    track.classList.remove('is-playing');
+                }
+            });
+
+            progress.addEventListener('input', () => {
+                audio.currentTime = progress.value;
+                updateTime();
+            });
         });
     </script>
 </body>
