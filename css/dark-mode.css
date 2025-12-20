@@ -496,19 +496,19 @@ section h2::after {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 0.5rem;
 }
 
 .track {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 0.5rem;
+    gap: 0.4rem;
     align-items: center;
-    padding: 0.5rem 0.6rem;
+    padding: 0.4rem 0.5rem;
     border: 1px solid var(--border-color);
     border-radius: 12px;
     background-color: rgba(75, 108, 183, 0.06);
-    min-width: 220px;
+    min-width: 190px;
 }
 
 body.dark-mode .track {
@@ -523,14 +523,21 @@ body.dark-mode .track {
     background-color: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 10px;
-    width: 32px;
-    height: 32px;
+    border-radius: 6px;
+    width: 26px;
+    height: 26px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.track-toggle i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .track-toggle:hover {
@@ -553,22 +560,22 @@ body.dark-mode .track {
 .track-title {
     font-weight: 600;
     color: var(--text-color);
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     white-space: nowrap;
 }
 
 .track-time {
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     color: var(--text-light);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
 
 .track-progress {
-    width: 140px;
+    width: 110px;
     cursor: pointer;
     accent-color: var(--primary-color);
-    height: 5px;
+    height: 4px;
     appearance: none;
     border-radius: 999px;
     background: var(--border-color);
@@ -580,29 +587,29 @@ body.dark-mode .track {
 }
 
 .track-progress::-webkit-slider-runnable-track {
-    height: 5px;
+    height: 4px;
     background: var(--border-color);
     border-radius: 999px;
 }
 
 .track-progress::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--primary-color);
     margin-top: -4px;
 }
 
 .track-progress::-moz-range-track {
-    height: 6px;
+    height: 4px;
     background: var(--border-color);
     border-radius: 999px;
 }
 
 .track-progress::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border: none;
     border-radius: 50%;
     background: var(--primary-color);
